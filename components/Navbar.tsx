@@ -2,7 +2,10 @@ import { FaKhanda } from 'react-icons/fa';
 import Link from 'next/link';
 import { ModeToggler } from './ModeToggler';
 import { buttonVariants } from './ui/button';
-export default function Navbar() {
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+export default async function Navbar() {
+    const session = await getServerSession(authOptions)
     return (
         <nav className="bg-white border-gray-200 dark:bg-gray-900">
             <div className="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
@@ -16,8 +19,14 @@ export default function Navbar() {
                     </svg>
                 </button>
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-                    <div className="flex flex-col p-4 mt-4 font-medium border rounded-lg md:p-0 md:flex-row md:space-x-8 md:mt-0 md:border-0 dark:bg-gray-800 bg-gray-50 md:dark:bg-gray-900 dark:border-gray-700">
-                        <Link href="/signup" className={buttonVariants({ variant: "outline"})}>Sign in</Link>
+                    <div className="flex flex-col p-4 mt-4 font-medium border rounded-lg md:p-0 md:flex-row md:space-x-8 md:mt-0 md:border-0 dark:bg-gray-800 bg-gray-50 md:dark:bg-gray-900 dark:border-gray-700 md:items-center">
+                        {
+                            session?.user ?
+                            <p>Welcome {session.user.name}</p>
+                            :
+                            <Link href="/signin" className={buttonVariants({ variant: "outline"})}>Sign in</Link>
+                        }
+                        {session?.user&&(<Link href="/api/auth/signout" className={buttonVariants({ variant: "outline"})}>Sign out</Link>)}
                         <ModeToggler/>
                     </div>
                 </div>
@@ -25,4 +34,5 @@ export default function Navbar() {
         </nav>
     )
 }
+
 
