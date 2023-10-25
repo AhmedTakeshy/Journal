@@ -4,6 +4,7 @@ import { ModeToggler } from './ModeToggler';
 import { buttonVariants } from './ui/button';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import SignoutButton from './SignoutButton';
 export default async function Navbar() {
     const session = await getServerSession(authOptions)
     return (
@@ -19,14 +20,14 @@ export default async function Navbar() {
                     </svg>
                 </button>
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-                    <div className="flex flex-col p-4 mt-4 font-medium border rounded-lg md:p-0 md:flex-row md:space-x-8 md:mt-0 md:border-0 dark:bg-gray-800 bg-gray-50 md:dark:bg-gray-900 dark:border-gray-700 md:items-center">
+                    <div className="flex flex-col p-4 mt-4 font-medium border rounded-lg md:p-0 md:flex-row md:space-x-8 md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 md:items-center">
                         {
                             session?.user ?
                             <p>Welcome {session.user.name}</p>
                             :
                             <Link href="/signin" className={buttonVariants({ variant: "outline"})}>Sign in</Link>
                         }
-                        {session?.user&&(<Link href="/api/auth/signout" className={buttonVariants({ variant: "outline"})}>Sign out</Link>)}
+                        {session?.user&&(<SignoutButton/>)}
                         <ModeToggler/>
                     </div>
                 </div>

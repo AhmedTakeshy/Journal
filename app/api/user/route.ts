@@ -26,7 +26,7 @@ const signUp = async (req:Request)=>{
     })
     const existedUserUsername = await prisma.user.findUnique({
         where: {
-            username,
+            name: username,
 
         }
     })
@@ -36,12 +36,12 @@ const signUp = async (req:Request)=>{
     if (!existedUserEmail && !existedUserUsername) {
         const user = await prisma.user.create({
             data: {
-                username,
+                name: username,
                 email,
                 password: hashedPassword
             }
         })
-        const { email: userEmail, username: userName } = user
+        const { email: userEmail, name: userName } = user
         return Response.json({ message: `User ${userName} has been created successfully, with ${userEmail}.` }, { status: 201 })
     }
 }

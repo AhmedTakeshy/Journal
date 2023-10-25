@@ -35,7 +35,7 @@ export function SignInForm() {
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [isPending, startTransition] = useTransition()
-    const [message, setMessage] = useState<string>("")
+    const [message, setMessage] = useState<string|null>(null)
     const router = useRouter()
 
 
@@ -51,39 +51,21 @@ export function SignInForm() {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         const signInData = await signIn("credentials", {
-            redirect: false,
             email: values.email,
             password: values.password,
         })
-        console.log(signInData);
-
-        const res = await fetch("http://localhost:3000/api/user", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                email: values.email,
-                password: values.password,
-            })
-        })
-        const message = await res.json()
-        console.log(message.message)
-        console.log(res)
-        if (res.status === 201) {
+        if (signInData?.status === 200) {
             form.reset();
             router.replace("/")
         }
-        if (res.status === 409) {
-            setMessage(message.message)
+        if (signInData?.status === 409) {
+            setMessage(signInData?.error)
         }
     }
 
     return (
         <Form {...form} >
             <div className="p-4 space-y-2 border-2 rounded-md border-slate-800 dark:border-slate-400">
-
-
                 <form onSubmit={form.handleSubmit(onSubmit)} className="">
                     <FormField
                         control={form.control}

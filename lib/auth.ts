@@ -16,17 +16,16 @@ export const authOptions: NextAuthOptions = {
     },
     providers: [
         GitHubProvider({
-            clientId: process.env.GITHUB_ID || "",
-            clientSecret: process.env.GITHUB_SECRET || ""
+            clientId: process.env.GITHUB_ID!,
+            clientSecret: process.env.GITHUB_SECRET!
         }),
         CredentialsProvider({
             name: 'Credentials',
-
             credentials: {
                 email: { label: "Email", type: "email", placeholder: "example@email.com" },
                 password: { label: "Password", type: "password" }
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 if (!credentials?.email || !credentials?.password) return null;
 
                 const existingUser = await prisma.user.findUnique({
@@ -35,19 +34,21 @@ export const authOptions: NextAuthOptions = {
                     }
                 })
 
-                if(!existingUser) return null;
+                if (!existingUser) return null;
 
-                const isPasswordValid = await bcrypt.compare(credentials.password, existingUser.password)
+                const isPasswordValid = await bcrypt.compare(credentials.password, existingUser.password!)
 
-                if(!isPasswordValid) return null;
+                if (!isPasswordValid) return null;
 
                 return {
                     id: existingUser.id.toString(),
                     email: existingUser.email,
-                    username: existingUser.username
+                    name: existingUser.name,
                 }
 
             }
         })
-    ]
+    ],
+    
+
 }

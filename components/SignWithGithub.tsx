@@ -10,7 +10,9 @@ export default function SignWithGithub() {
         <p className="text-sm font-semibold dark:text-gray-400 text-slate-900 md:mx-2">OR</p>
         <div className="hidden w-5/12 h-px dark:bg-gray-300 bg-slate-800 md:block"></div>
       </div>
-      <Button onClick={() => signIn("github")} className="w-full text-black bg-slate-700">
+      <Button onClick={() => signIn("github",{
+        callbackUrl: "http://localhost:3000"
+      })} className="w-full text-black bg-slate-700">
         <Image className='mr-3' loading="lazy" height={24} width={24} src="https://authjs.dev/img/providers/github.svg" alt="Github logo" />
         <span>Sign in with GitHub</span>
       </Button>

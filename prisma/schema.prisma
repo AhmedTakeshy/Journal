@@ -21,18 +21,20 @@ model Post {
   updatedAt DateTime @updatedAt
 }
 
-
 model User {
-  id      Int      @id @default(autoincrement())
-  username    String? @unique
-  email   String   @unique
-  password String
-  posts   Post[]
-  active  Boolean  @default(true)
-  role    Role     @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int    @id @default(autoincrement())
+  name      String?   @unique
+  email     String    @unique
+  password  String?
+  image     String?
+  emailVerified DateTime?
+  posts     Post[]
+  active    Boolean?  @default(true)
+  role      Role?     @default(USER)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+  accounts  Account[]
 }
 
 enum Role {
@@ -40,3 +42,20 @@ enum Role {
   ADMIN
 }
 
+model Account {
+  id                Int  @id @default(autoincrement())
+  type              String
+  provider          String
+  providerAccountId String
+  access_token      String?
+  token_type        String?
+  refresh_token     String?
+  scope             String?
+  session_state     String?
+  expires_at        Int?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            Int
+
+  @@unique([provider, providerAccountId])
+  @@map("account")
+}
