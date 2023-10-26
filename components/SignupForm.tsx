@@ -19,6 +19,7 @@ import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
 import { useState,useTransition } from "react"
 import Link from "next/link"
 import SignWithGithub from "./SignWithGithub"
+import { useToast } from "./ui/use-toast"
 
 
 
@@ -40,6 +41,7 @@ const formSchema = z.object({
     message: "Passwords do not match.",
 })
 export function SignUpForm() {
+    const {toast} = useToast()
 
     const [showPassword, setShowPassword] = useState<{password: boolean, confirmPassword: boolean}>
     ({
@@ -47,7 +49,6 @@ export function SignUpForm() {
         confirmPassword: false
     });
     const [isPending, startTransition] = useTransition()
-    const [message, setMessage] = useState<string>("")
     const router = useRouter()
     
 
@@ -76,14 +77,17 @@ export function SignUpForm() {
             })
         })
         const message = await res.json()
-        console.log(message.message)
-        console.log(res)
         if (res.status === 201) {
             form.reset();
             router.replace("/")
         }
         if(res.status === 409){
-            setMessage(message.message)
+            toast({
+                title: "Oops!",
+                description: message.message,
+                duration: 5000,
+                variant: "destructive"
+            })
         }
     }
 
@@ -162,7 +166,6 @@ export function SignUpForm() {
                     />
                     <Button type="submit" className="w-full !mt-4">{isPending ? "Loading..." : "Sign Up"}</Button>
                 </form>
-                    <FormMessage>{message}</FormMessage>
                 <SignWithGithub />
             </div>
             

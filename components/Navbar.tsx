@@ -8,7 +8,7 @@ import SignoutButton from './SignoutButton';
 export default async function Navbar() {
     const session = await getServerSession(authOptions)
     return (
-        <nav className="bg-white border-gray-200 dark:bg-gray-900">
+        <nav className="bg-cyan-500 dark:bg-gray-900">
             <div className="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
                 <Link href="/" className="flex items-center">
                     <FaKhanda className="w-8 h-8 text-black dark:text-white " />

@@ -14,12 +14,13 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useRouter } from "next/navigation"
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import { signIn } from "next-auth/react"
 import SignWithGithub from "./SignWithGithub"
+import { useRouter } from "next/navigation"
+import {useToast} from "./ui/use-toast"
 
 
 
@@ -34,10 +35,8 @@ const formSchema = z.object({
 export function SignInForm() {
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [isPending, startTransition] = useTransition()
-    const [message, setMessage] = useState<string|null>(null)
     const router = useRouter()
-
+    const {toast} = useToast()
 
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -46,20 +45,26 @@ export function SignInForm() {
             email: "",
             password: "",
         },
-
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         const signInData = await signIn("credentials", {
+            redirect: false,
             email: values.email,
             password: values.password,
         })
+        console.log(signInData)
         if (signInData?.status === 200) {
-            form.reset();
-            router.replace("/")
+            router.refresh()
+            router.replace("/admin")
         }
-        if (signInData?.status === 409) {
-            setMessage(signInData?.error)
+        if (signInData?.status === 401) {
+            toast({
+                title: "Oops!",
+                description: "Email or password is incorrect.",
+                variant: "destructive",
+                duration: 5000,
+            })
         }
     }
 
@@ -104,7 +109,6 @@ export function SignInForm() {
                     />
                     <Button type="submit" className="w-full !mt-4">Sign In</Button>
                 </form>
-                <FormMessage>{message}</FormMessage>
                 <SignWithGithub />
                 <p>If you don&apos;t have an account, please <Link href="/signup" className="text-blue-500 hover:text-blue-700">Sign up</Link></p>
             </div>

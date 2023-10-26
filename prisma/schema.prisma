@@ -14,6 +14,7 @@ model Post {
   id        Int      @id @default(autoincrement())
   title     String   @db.VarChar(255)
   content   String?
+  image     String[]
   published Boolean  @default(false)
   authorId  Int
   author    User     @relation(fields: [authorId], references: [id])
