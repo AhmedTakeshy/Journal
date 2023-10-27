@@ -45,7 +45,3 @@ const signUp = async (req:Request)=>{
         return Response.json({ message: `User ${userName} has been created successfully, with ${userEmail}.` }, { status: 201 })
     }
 }
-
-const logIn = async (req:Request)=>{
-    const {email,password} = await req.json();
-}

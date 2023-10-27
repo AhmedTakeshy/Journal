@@ -20,7 +20,7 @@ import Link from "next/link"
 import { signIn } from "next-auth/react"
 import SignWithGithub from "./SignWithGithub"
 import { useRouter } from "next/navigation"
-import {useToast} from "./ui/use-toast"
+import { useToast } from "./ui/use-toast"
 
 
 
@@ -36,7 +36,7 @@ export function SignInForm() {
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const router = useRouter()
-    const {toast} = useToast()
+    const { toast } = useToast()
 
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -56,7 +56,7 @@ export function SignInForm() {
         console.log(signInData)
         if (signInData?.status === 200) {
             router.refresh()
-            router.replace("/admin")
+            router.replace("/")
         }
         if (signInData?.status === 401) {
             toast({

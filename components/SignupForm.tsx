@@ -79,7 +79,7 @@ export function SignUpForm() {
         const message = await res.json()
         if (res.status === 201) {
             form.reset();
-            router.replace("/")
+            router.replace("/signin")
         }
         if(res.status === 409){
             toast({

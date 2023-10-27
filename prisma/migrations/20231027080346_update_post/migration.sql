@@ -6,6 +6,8 @@ CREATE TABLE "Post" (
     "id" SERIAL NOT NULL,
     "title" VARCHAR(255) NOT NULL,
     "content" TEXT,
+    "image" TEXT[],
+    "topic" TEXT[],
     "published" BOOLEAN NOT NULL DEFAULT false,
     "authorId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

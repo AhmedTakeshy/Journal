@@ -34,11 +34,11 @@ export const authOptions: NextAuthOptions = {
                     }
                 })
                 if (!existingUser) return null;
-                
+
                 const isPasswordValid = await bcrypt.compare(credentials.password, existingUser.password!)
-                
+
                 if (!isPasswordValid) return null;
-                
+
                 return {
                     id: existingUser.id.toString(),
                     email: existingUser.email,
@@ -50,13 +50,13 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
             return true
-    },
-    async session({ session, token, user }) {
-        return session
-    },
-    async jwt({ token, user, account, profile }) {
-        return token
+        },
+        async session({ session, token, user }) {
+            return session
+        },
+        async jwt({ token, user, account, profile }) {
+            return token
+        }
     }
-}
 
 }
