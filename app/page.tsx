@@ -3,15 +3,38 @@ import { getServerSession } from 'next-auth';
 import Post from "@/components/Post";
 import PostForm from "@/components/PostForm";
 
+const getPostsAndAuthors = async () => {
+  const res = await fetch("http://localhost:3000/api/posts", { next: { tags: ["posts"] } })
+  const data = await res.json()
+  return data
+}
+
 export default async function Home() {
   const session = await getServerSession()
+  const postsAndAuthors = await getPostsAndAuthors();
+
+
+
   return (
     session?.user
       ?
       (
-        <div className='grid grid-cols-1 m-4 place-items-center'>
+        <div className='grid grid-cols-1 m-4 place-items-center w-[40rem]'>
           <PostForm />
-          <Post />
+          {postsAndAuthors.posts.map((post: Post) => {
+            const author = postsAndAuthors.postsAuthor.find((author: Author) => author.id === post.authorId);
+            return (
+              <Post
+                key={post.id}
+                authorImage={author.image}
+                authorName={author.name}
+                date={post.createdAt}
+                title={post.title}
+                content={post.content}
+                topic={post.topic} />
+            )
+          }).reverse()
+          }
         </div>
       )
       :

@@ -30,7 +30,7 @@ export default function RootLayout({
           <Toaster />
           <AuthProvider>
             <Navbar />
-            <main>
+            <main className="flex justify-center">
               {children}
             </main>
           </AuthProvider>
