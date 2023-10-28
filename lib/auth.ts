@@ -12,6 +12,7 @@ export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
     session: {
         strategy: "jwt",
+        maxAge: 24 * 60 * 60,
         updateAge: 24 * 60 * 60,
     },
     providers: [
@@ -47,6 +48,7 @@ export const authOptions: NextAuthOptions = {
             }
         })
     ],
+
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
             return true

@@ -14,8 +14,8 @@ model Post {
   id        Int      @id @default(autoincrement())
   title     String   @db.VarChar(255)
   content   String?
-  image     String[]
-  topic     String[]
+  images    Image[]
+  topic     String
   published Boolean  @default(false)
   authorId  Int
   author    User     @relation(fields: [authorId], references: [id])
@@ -23,20 +23,28 @@ model Post {
   updatedAt DateTime @updatedAt
 }
 
+model Image {
+  id        Int      @id @default(autoincrement())
+  url       String
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+}
+
 model User {
-  id        Int    @id @default(autoincrement())
-  name      String?   @unique
-  email     String    @unique
-  password  String?
-  image     String?
+  id            Int       @id @default(autoincrement())
+  name          String?   @unique
+  email         String    @unique
+  password      String?
+  image         String?
   emailVerified DateTime?
-  posts     Post[]
-  active    Boolean?  @default(true)
-  role      Role?     @default(USER)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-  accounts  Account[]
+  posts         Post[]
+  active        Boolean?  @default(true)
+  role          Role?     @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+  accounts      Account[]
 }
 
 enum Role {
@@ -45,7 +53,7 @@ enum Role {
 }
 
 model Account {
-  id                Int  @id @default(autoincrement())
+  id                Int     @id @default(autoincrement())
   type              String
   provider          String
   providerAccountId String

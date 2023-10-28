@@ -10,6 +10,14 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'randomuser.me',
             },
+            {
+                protocol: 'https',
+                hostname: 'ui-avatars.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'avatars.githubusercontent.com',
+            },
         ]
     }
 }
