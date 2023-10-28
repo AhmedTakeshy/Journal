@@ -16,10 +16,11 @@ import {
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation"
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
-import { useState,useTransition } from "react"
+import { useState, useTransition } from "react"
 import Link from "next/link"
 import SignWithGithub from "./SignWithGithub"
 import { useToast } from "./ui/use-toast"
+import { ImSpinner9 } from "react-icons/im"
 
 
 
@@ -41,16 +42,16 @@ const formSchema = z.object({
     message: "Passwords do not match.",
 })
 export function SignUpForm() {
-    const {toast} = useToast()
+    const { toast } = useToast()
 
-    const [showPassword, setShowPassword] = useState<{password: boolean, confirmPassword: boolean}>
-    ({
-        password: false,
-        confirmPassword: false
-    });
-    const [isPending, startTransition] = useTransition()
+    const [showPassword, setShowPassword] = useState<{ password: boolean, confirmPassword: boolean }>
+        ({
+            password: false,
+            confirmPassword: false
+        });
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     const router = useRouter()
-    
+
 
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -65,6 +66,7 @@ export function SignUpForm() {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        setIsSubmitting(true)
         const res = await fetch("http://localhost:3000/api/user", {
             method: "POST",
             headers: {
@@ -78,14 +80,20 @@ export function SignUpForm() {
         })
         const message = await res.json()
         if (res.status === 201) {
+            toast({
+                title: "Success!",
+                description: "Your account has been created.",
+                duration: 3000,
+            })
             form.reset();
+            setIsSubmitting(false)
             router.replace("/signin")
         }
-        if(res.status === 409){
+        if (res.status === 409) {
             toast({
                 title: "Oops!",
                 description: message.message,
-                duration: 5000,
+                duration: 3000,
                 variant: "destructive"
             })
         }
@@ -93,7 +101,7 @@ export function SignUpForm() {
 
     return (
         <Form {...form} >
-            <div className="w-full max-w-xs p-4 space-y-2 border-2 rounded-md border-slate-800 dark:border-slate-400">
+            <div className="w-full p-4 space-y-2 border-2 rounded-md border-slate-800 dark:border-slate-400">
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField
                         control={form.control}
@@ -164,11 +172,11 @@ export function SignUpForm() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className="w-full !mt-4">{isPending ? "Loading..." : "Sign Up"}</Button>
+                    <Button type="submit" className="w-full !mt-4">{isSubmitting ? <ImSpinner9 className="ease-in-out animate-spin" size={25} /> : "Sign Up"}</Button>
                 </form>
                 <SignWithGithub />
             </div>
-            
+
         </Form>
     )
 }

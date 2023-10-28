@@ -6,8 +6,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import SignoutButton from './SignoutButton';
 import NavMenu from './NavMenu';
-
-
+import Image from 'next/image';
 
 
 
@@ -26,17 +25,20 @@ export default async function Navbar() {
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
                     </svg>
                 </button>
-                <NavMenu/>
+                <NavMenu />
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
                     <div className="flex flex-col p-4 mt-4 font-medium border rounded-lg md:p-0 md:flex-row md:space-x-8 md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 md:items-center">
                         {
                             session?.user ?
-                            <p>{session.user.name}</p>
-                            :
-                            <Link href="/signin" className={buttonVariants({ variant: "outline"})}>Sign in</Link>
+                                <div className='flex items-center justify-center gap-2'>
+                                    <Image src={session?.user.image ?? `https://ui-avatars.com/api/?name=${session.user.name}&background=random&rounded=true&size=128&font-size=0.50`} alt="user" width={35} height={35} className="object-cover rounded-full" />
+                                    <p>{session.user.name}</p>
+                                </div>
+                                :
+                                <Link href="/signin" className={buttonVariants({ variant: "outline" })}>Sign in</Link>
                         }
-                        {session?.user&&(<SignoutButton/>)}
-                        <ModeToggler/>
+                        {session?.user && (<SignoutButton />)}
+                        <ModeToggler />
                     </div>
                 </div>
             </div>

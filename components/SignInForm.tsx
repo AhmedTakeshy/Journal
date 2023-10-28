@@ -21,6 +21,7 @@ import { signIn } from "next-auth/react"
 import SignWithGithub from "./SignWithGithub"
 import { useRouter } from "next/navigation"
 import { useToast } from "./ui/use-toast"
+import { ImSpinner9 } from "react-icons/im"
 
 
 
@@ -34,6 +35,7 @@ const formSchema = z.object({
 })
 export function SignInForm() {
 
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const router = useRouter()
     const { toast } = useToast()
@@ -48,6 +50,7 @@ export function SignInForm() {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        setIsSubmitting(true)
         const signInData = await signIn("credentials", {
             redirect: false,
             email: values.email,
@@ -55,6 +58,12 @@ export function SignInForm() {
         })
         console.log(signInData)
         if (signInData?.status === 200) {
+            toast({
+                title: "Welcome back!",
+                description: "You have successfully logged in.",
+                duration: 3000,
+            })
+            setIsSubmitting(false)
             router.refresh()
             router.replace("/")
         }
@@ -63,8 +72,9 @@ export function SignInForm() {
                 title: "Oops!",
                 description: "Email or password is incorrect.",
                 variant: "destructive",
-                duration: 5000,
+                duration: 3000,
             })
+            setIsSubmitting(false)
         }
     }
 
@@ -107,7 +117,7 @@ export function SignInForm() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className="w-full !mt-4">Sign In</Button>
+                    <Button type="submit" className="w-full !mt-4">{isSubmitting ? <ImSpinner9 className="ease-in-out animate-spin" size={25} /> : "Sign In"}</Button>
                 </form>
                 <SignWithGithub />
                 <p>If you don&apos;t have an account, please <Link href="/signup" className="text-blue-500 hover:text-blue-700">Sign up</Link></p>
