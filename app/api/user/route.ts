@@ -1,10 +1,8 @@
 import { prisma } from "@/lib/prisma"
 import { hash } from "bcrypt";
 import * as z from "zod";
-import { revalidateTag } from "next/cache";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import { NextRequest } from "next/server";
+
 
 const userSchema = z.object({
     username: z.string().min(3, "Username is required").max(25),
@@ -12,37 +10,19 @@ const userSchema = z.object({
     password: z.string().min(8, "Password must be at least 8 characters.")
 })
 
-// const getSession = async () => {
-//     const res = await fetch("http://localhost:3000/api/auth", {
-//         credentials: "include",
-//         headers: {
-//             Cookie: req.headers.cookie
-//         }
-//         })
-//     const session = await res.json()
-//     return session
-// }
-
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams
     const email = searchParams.get('email')
-    console.log(email)
     try {
         const user = await prisma.user.findUnique({
             where: {
                 email: email!
             },
         })
-        const posts = await prisma.post.findMany({
-            where: {
-                authorId: user?.id
-            }
-        })
-        revalidateTag("userPosts")
-        console.log(user, posts)
-        return Response.json({ posts, user })
+        if (!user) return Response.json({ message: "User not found", status: 404 })
+        return Response.json(user)
     } catch (error) {
-        return Response.json({ message: "Something went wrong!" }, { status: 500 })
+        return Response.json({ message: "Something went wrong!", status: 500 })
     }
 }
 
@@ -51,7 +31,7 @@ export async function POST(req: Request) {
     try {
         return await signUp(req)
     } catch (error) {
-        return Response.json({ message: "Something went wrong!" }, { status: 500 })
+        return Response.json({ message: "Something went wrong!", status: 500 })
     }
 }
 
@@ -82,7 +62,7 @@ const signUp = async (req: Request) => {
             }
         })
         const { email: userEmail, name: userName } = user
-        return Response.json({ message: `User ${userName} has been created successfully, with ${userEmail}.` }, { status: 201 })
+        return Response.json({ message: `User ${userName} has been created successfully, with ${userEmail}.`, status: 201 })
     }
 }
 

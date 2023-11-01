@@ -6,26 +6,29 @@ import PostForm from "@/components/PostForm";
 const getPostsAndAuthors = async () => {
   const res = await fetch("http://localhost:3000/api/posts", { next: { tags: ["posts"] } })
   const data = await res.json()
+  console.log(data)
   return data
 }
 
 export default async function Home() {
   const session = await getServerSession()
   const postsAndAuthors = await getPostsAndAuthors();
-
-
+  console.log(postsAndAuthors)
 
   return (
     session?.user
       ?
       (
         <div className='grid grid-cols-1 m-4 place-items-center w-[40rem]'>
-          <PostForm />
-          {postsAndAuthors.posts.map((post: Post) => {
+          <PostForm method="POST" />
+          {postsAndAuthors.posts?
+          postsAndAuthors.posts.map((post: Post) => {
             const author = postsAndAuthors.postsAuthor.find((author: Author) => author.id === post.authorId);
             return (
               <Post
                 key={post.id}
+                id={post.id}
+                authorId={post.authorId}
                 authorImage={author.image}
                 authorName={author.name}
                 date={post.createdAt}
@@ -34,7 +37,7 @@ export default async function Home() {
                 topic={post.topic} />
             )
           }).reverse()
-          }
+          :null}
         </div>
       )
       :

@@ -16,13 +16,13 @@ export default function PostDetails() {
         <>
             <div className="p-4 dark:bg-slate-700 bg-slate-300 md:p-8 rounded-xl">
                 {/*<!--Banner image-->*/}
-                <Image
+                {/* <Image
                 width={551}
                 height={320}
                 alt={`post image`}
                     className="object-cover object-center w-full rounded-lg h-80"
                     src="https://images.unsplash.com/photo-1603349206295-dde20617cb6a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
-                />
+                /> */}
 
                 {/*<!--Topic-->*/}
                 <p className="mt-2 text-base font-semibold text-indigo-500">Science</p>
@@ -44,9 +44,9 @@ export default function PostDetails() {
                 <div className="flex items-center mt-20 space-x-2">
                     {/*<!--Author's profile photo-->*/}
                     <Image
-                    width={551}
-                    height={320}
-                    alt={`post image`}
+                        width={551}
+                        height={320}
+                        alt={`post image`}
                         className="object-cover object-center w-10 h-10 rounded-full"
                         src="https://randomuser.me/api/portraits/men/54.jpg"
                     />
@@ -65,9 +65,9 @@ export default function PostDetails() {
             <div className="p-4 dark:bg-slate-700 bg-slate-300 md:p-8 rounded-xl">
                 {/*<!--Banner image-->*/}
                 <Image
-                width={551}
-                height={320}
-                alt={`post image`}
+                    width={551}
+                    height={320}
+                    alt={`post image`}
                     className="object-cover object-center w-full rounded-lg h-80"
                     src="https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80
           "
@@ -94,9 +94,9 @@ export default function PostDetails() {
                 <div className="flex items-center mt-20 space-x-2">
                     {/*<!--Author's profile photo-->*/}
                     <Image
-                    width={551}
-                    height={320}
-                    alt={`post image`}
+                        width={551}
+                        height={320}
+                        alt={`post image`}
                         className="object-cover object-center w-10 h-10 rounded-full"
                         src="https://randomuser.me/api/portraits/men/54.jpg"
                     />
@@ -115,10 +115,10 @@ export default function PostDetails() {
             <div className="p-4 dark:bg-slate-700 bg-slate-300 md:p-8 rounded-xl">
                 {/*<!--Banner image-->*/}
                 <Image
-                width={551}
-                height={320}
-                alt={`post image`} 
-                className="object-cover object-center w-full rounded-lg h-80" src="
+                    width={551}
+                    height={320}
+                    alt={`post image`}
+                    className="object-cover object-center w-full rounded-lg h-80" src="
         https://images.unsplash.com/photo-1580867532901-7e3707f178ce?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=732&q=80"/>
                 {/*<!--Topic-->*/}
                 <p className="mt-2 text-base font-semibold text-indigo-500">Culture</p>
@@ -140,9 +140,9 @@ export default function PostDetails() {
                 <div className="flex items-center mt-20 space-x-2">
                     {/*<!--Author's profile photo-->*/}
                     <Image
-                    width={551}
-                    height={320}
-                    alt={`post image`}
+                        width={551}
+                        height={320}
+                        alt={`post image`}
                         className="object-cover object-center w-10 h-10 rounded-full"
                         src="https://randomuser.me/api/portraits/men/54.jpg"
                     />

@@ -1,11 +1,40 @@
-import PostDetails from '@/components/PostDetails'
+import PostForm from '@/components/PostForm'
+import { getServerSession } from 'next-auth';
+import { getPostsUser } from '../page';
+import Post from '@/components/Post';
 
-type Props = {}
+type Props = {
+  params: {
+    id: number
+  }
+}
 
-export default function page({}: Props) {
+const getPost = async (id: number) => {
+  const res = await fetch(`http://localhost:3000/api/post?id=${id}`, { next: { tags: ["updatePost"] } });
+  const data = await res.json();
+  return data;
+}
+
+export default async function page({ params: { id } }: Props) {
+  const post = await getPost(id);
+  const session = await getServerSession();
+  const { user } = await getPostsUser(session?.user?.email as string);
+
   return (
-      <div className="grid grid-cols-1 gap-3 m-4 md:grid-cols-2 lg:grid-cols-3">
-          <PostDetails />
-      </div>
+    <div className="grid max-w-screen-md w-[40rem] gap-4 m-4 place-items-center ">
+      <Post
+        id={post.id}
+        authorId={post.authorId}
+        authorImage={user.image}
+        authorName={user.name}
+        date={post.createdAt}
+        title={post.title}
+        content={post.content}
+        topic={post.topic}
+      />
+    </div>
   )
 }
+
+
+
