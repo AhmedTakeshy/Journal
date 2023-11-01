@@ -6,14 +6,12 @@ import PostForm from "@/components/PostForm";
 const getPostsAndAuthors = async () => {
   const res = await fetch("http://localhost:3000/api/posts", { next: { tags: ["posts"] } })
   const data = await res.json()
-  console.log(data)
   return data
 }
 
 export default async function Home() {
   const session = await getServerSession()
   const postsAndAuthors = await getPostsAndAuthors();
-  console.log(postsAndAuthors)
 
   return (
     session?.user

@@ -1,9 +1,7 @@
-import { SlOptions } from "react-icons/sl"
 import Image from "next/image"
 import { formattedDate } from "@/lib/helpers"
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { headers } from "next/headers";
 import { OptionsButton } from "./OptionsButton";
 
 type Props = {
@@ -23,14 +21,12 @@ type Props = {
 export default async function Post({ authorName, authorImage, date, title, topic, content, id, authorId }: Props) {
     const session = await getServerSession();
     const avatar = `https://ui-avatars.com/api/?name=${session?.user?.name}&background=random&rounded=true&size=128&font-size=0.50`;
-    const headersList = headers()
-    const referer = headersList.get('referer')
 
     return (
         <>
             <div className="w-full max-w-screen-md p-4 mt-6 border dark:bg-slate-700 bg-slate-200 rounded-2xl">
                 <div className="flex items-center justify-between">
-                    <Link href={referer?.includes("posts") ? `${id}` : `/posts/${id}`} className="gap-3.5	flex items-center ">
+                    <Link href={`http://localhost:3000/posts/${id}`} className="gap-3.5	flex items-center ">
                         <Image src={authorImage ?? avatar}
                             alt={`${authorName} image`} width={40} height={40} className="object-cover w-10 h-10 bg-yellow-500 rounded-full" />
                         <div className="flex flex-col">
@@ -40,9 +36,9 @@ export default async function Post({ authorName, authorImage, date, title, topic
                     </Link>
                     <OptionsButton authorId={authorId} id={id} />
                 </div>
-                <Link href={referer?.includes("posts") ? `${id}` : `/posts/${id}`} className="grid">
+                <Link href={`http://localhost:3000/posts/${id}`} className="grid">
                     <h2 className="whitespace-pre-wrap mt-7">{title}</h2>
-                    {topic&&(<span className="">#<b className="mb-2 text-blue-400">{topic.split(" ").join("_")}</b></span>)}
+                    {topic && (<span className="">#<b className="mb-2 text-blue-400">{topic.split(" ").join("_")}</b></span>)}
                     <p className="w-full mt-8 mb-2 text-left">{content}</p>
                 </Link>
                 {/* <div className="flex flex-wrap justify-center gap-2 pb-4 mt-5 border-b ">

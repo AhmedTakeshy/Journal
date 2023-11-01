@@ -74,7 +74,6 @@ export default function PostForm({ method, data }: Props) {
                     },
                 })
             const res = await respond.json()
-            console.log(res)
             if (res.status === 201 || res.status === 200) {
                 toast({
                     title: "Success!",
@@ -84,7 +83,7 @@ export default function PostForm({ method, data }: Props) {
                 form.reset()
                 setIsSubmitting(false)
                 setOpen(false)
-                router.push(`/posts${method === "POST" ? "" : res.post.id}`)
+                router.push(`/posts/${method === "POST" ? "" : res.post.id}`)
                 router.refresh()
             }
         } catch (error) {

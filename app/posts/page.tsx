@@ -12,7 +12,6 @@ export const getPostsUser = async (email: string) => {
 export default async function page() {
   const session = await getServerSession();
   const { posts, user } = await getPostsUser(session?.user?.email as string);
-  console.log(posts, user)
 
   return (
     <div className='grid grid-cols-1 m-4 place-items-center w-[40rem]'>
