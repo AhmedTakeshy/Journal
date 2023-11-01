@@ -7,7 +7,7 @@ type Props = {
 }
 
 const getPost = async (id: number) => {
-    const res = await fetch(`http://localhost:3000/api/post?id=${id}`, { next: { tags: ["updatePost"] } });
+    const res = await fetch(`${process.env.BASE_URL}/api/post?id=${id}`, { next: { tags: ["updatePost"] } });
     const data = await res.json();
     return data;
 }

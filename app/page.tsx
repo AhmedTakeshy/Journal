@@ -4,7 +4,7 @@ import Post from "@/components/Post";
 import PostForm from "@/components/PostForm";
 
 const getPostsAndAuthors = async () => {
-  const res = await fetch("http://localhost:3000/api/posts", { next: { tags: ["posts"] } })
+  const res = await fetch(`${process.env.BASE_URL}/api/posts`, { next: { tags: ["posts"] } })
   const data = await res.json()
   return data
 }
@@ -12,7 +12,6 @@ const getPostsAndAuthors = async () => {
 export default async function Home() {
   const session = await getServerSession()
   const postsAndAuthors = await getPostsAndAuthors();
-
   return (
     session?.user
       ?

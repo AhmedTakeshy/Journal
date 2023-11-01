@@ -46,7 +46,7 @@ export function OptionsButton({ id, authorId }: Props) {
     useEffect(() => {
         const authorizationHandler = async () => {
             if (session?.user) {
-                const res = await fetch(`http://localhost:3000/api/user?email=${session?.user?.email}`)
+                const res = await fetch(`${process.env.BASE_URL}/api/user?email=${session?.user?.email}`)
                 const user = await res.json()
                 if (authorId === user?.id) {
                     setAuthorized(true)
@@ -63,7 +63,7 @@ export function OptionsButton({ id, authorId }: Props) {
     const deletePost = async () => {
         if (!authorized) return;
         setIsSubmitting(true)
-        const res = await fetch(`http://localhost:3000/api/post?id=${id}&email=${session?.user?.email}`, {
+        const res = await fetch(`${process.env.BASE_URL}/api/post?id=${id}&email=${session?.user?.email}`, {
             method: "DELETE",
         })
         const data = await res.json()

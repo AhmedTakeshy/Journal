@@ -4,7 +4,7 @@ import { getServerSession } from 'next-auth';
 
 
 export const getPostsUser = async (email: string) => {
-  const postsAndUser = await fetch(`http://localhost:3000/api/users?email=${email}`, { next: { tags: ["userPosts"] } });
+  const postsAndUser = await fetch(`${process.env.BASE_URL}/api/users?email=${email}`, { next: { tags: ["userPosts"] } });
   const { posts, user } = await postsAndUser.json();
   return { posts, user };
 }

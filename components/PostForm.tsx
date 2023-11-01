@@ -56,7 +56,7 @@ export default function PostForm({ method, data }: Props) {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         setIsSubmitting(true)
-        let url = "http://localhost:3000/api/post"
+        let url = "${process.env.BASE_URL}/api/post"
         if(method === "PUT") url += `?id=${data?.id}`
         try {
             const respond =

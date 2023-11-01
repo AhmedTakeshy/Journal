@@ -67,7 +67,7 @@ export function SignUpForm() {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setIsSubmitting(true)
-        const res = await fetch("http://localhost:3000/api/user", {
+        const res = await fetch("${process.env.BASE_URL}/api/user", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
