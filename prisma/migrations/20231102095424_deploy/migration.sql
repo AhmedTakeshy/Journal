@@ -29,7 +29,7 @@ CREATE TABLE "Image" (
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "name" TEXT,
-    "email" TEXT NOT NULL,
+    "email" TEXT,
     "password" TEXT,
     "image" TEXT,
     "emailVerified" TIMESTAMP(3),
@@ -49,6 +49,8 @@ CREATE TABLE "account" (
     "provider" TEXT NOT NULL,
     "providerAccountId" TEXT NOT NULL,
     "access_token" TEXT,
+    "user_id" BIGINT,
+    "id_token" TEXT,
     "token_type" TEXT,
     "refresh_token" TEXT,
     "scope" TEXT,
@@ -69,10 +71,10 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX "account_provider_providerAccountId_key" ON "account"("provider", "providerAccountId");
 
 -- AddForeignKey
-ALTER TABLE "Post" ADD CONSTRAINT "Post_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Post" ADD CONSTRAINT "Post_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Image" ADD CONSTRAINT "Image_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Image" ADD CONSTRAINT "Image_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "account" ADD CONSTRAINT "account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

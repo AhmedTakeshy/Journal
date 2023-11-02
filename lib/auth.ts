@@ -1,6 +1,9 @@
 import { NextAuthOptions } from "next-auth"
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials"
+import InstagramProvider from "next-auth/providers/instagram";
+import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcrypt";
@@ -19,6 +22,18 @@ export const authOptions: NextAuthOptions = {
         GitHubProvider({
             clientId: process.env.GITHUB_ID!,
             clientSecret: process.env.GITHUB_SECRET!
+        }),
+        FacebookProvider({
+            clientId: process.env.FACEBOOK_CLIENT_ID!,
+            clientSecret: process.env.FACEBOOK_CLIENT_SECRET!
+        }),
+        InstagramProvider({
+            clientId: process.env.INSTAGRAM_CLIENT_ID!,
+            clientSecret: process.env.INSTAGRAM_CLIENT_SECRET!
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!
         }),
         CredentialsProvider({
             name: 'Credentials',
