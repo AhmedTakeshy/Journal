@@ -56,7 +56,6 @@ export function SignInForm() {
             email: values.email,
             password: values.password,
         })
-        console.log(signInData)
         if (signInData?.status === 200) {
             toast({
                 title: "Welcome back!",

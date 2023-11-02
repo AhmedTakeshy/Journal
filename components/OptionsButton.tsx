@@ -67,7 +67,6 @@ export function OptionsButton({ id, authorId }: Props) {
             method: "DELETE",
         })
         const data = await res.json()
-        console.log(data)
         if (data.status === 200) {
             setOpen(false)
             toast({ title: "Deleted", description: "Your post has been deleted", duration: 3000 })
