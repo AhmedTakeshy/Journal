@@ -56,7 +56,7 @@ export default function PostForm({ method, data }: Props) {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         setIsSubmitting(true)
-        let url = `${process.env.BASE_URL}/api/post`
+        let url = `/api/post`
         if(method === "PUT") url += `?id=${data?.id}`
         try {
             const respond =
@@ -127,7 +127,7 @@ export default function PostForm({ method, data }: Props) {
                                             <FormItem>
                                                 <FormLabel>Topic</FormLabel>
                                                 <FormControl>
-                                                    <Input spellCheck placeholder="Maybe something create" {...field} />
+                                                    <Input spellCheck placeholder="Maybe something creative" {...field} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>

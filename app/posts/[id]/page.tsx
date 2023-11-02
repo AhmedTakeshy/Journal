@@ -18,6 +18,8 @@ const getPost = async (id: number) => {
 export default async function page({ params: { id } }: Props) {
   const post = await getPost(id);
   const session = await getServerSession();
+  console.log(process.env.BASE_URL);
+  
   const { user } = await getPostsUser(session?.user?.email as string);
 
   return (
