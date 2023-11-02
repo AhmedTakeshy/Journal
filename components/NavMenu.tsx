@@ -24,7 +24,9 @@ import { useState } from "react"
 export default function NavMenu() {
     const { data: session, status } = useSession()
     const [open, setOpen] = useState<boolean>(false)
-
+    const avatar = `https://ui-avatars.com/api/?name=${session?.user?.name}&background=random&rounded=true&size=128&font-size=0.50`;
+    const image = session?.user?.image; 
+    
     return (
         <div>
             <Popover onOpenChange={setOpen} open={open}>
@@ -36,10 +38,10 @@ export default function NavMenu() {
                         </svg>
                     </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-screen relative">
-                    <div className="flex flex-col items-center md:flex-row mx-auto">
+                <PopoverContent className="relative w-screen">
+                    <div className="flex flex-col items-center mx-auto md:flex-row">
                         <NavigationMenu>
-                            <NavigationMenuList className="gap-2 flex-col flex items-center justify-center">
+                            <NavigationMenuList className="flex flex-col items-center justify-center gap-2">
                                 <NavigationMenuItem>
                                     <Link href="/" legacyBehavior passHref>
                                         <NavigationMenuLink onClick={() => setOpen(false) } className={navigationMenuTriggerStyle()}>Home</NavigationMenuLink>
@@ -57,14 +59,14 @@ export default function NavMenu() {
                                 </NavigationMenuItem>
                             </NavigationMenuList>
                         </NavigationMenu>
-                        <div className=" md:w-full md:hidden flex flex-col w-full">
-                            <div className="flex flex-col justify-center p-4 mt-4 font-medium  rounded-lg md:p-0 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:dark:bg-gray-900  items-center gap-3">
+                        <div className="flex flex-col w-full md:w-full md:hidden">
+                            <div className="flex flex-col items-center justify-center gap-3 p-4 mt-4 font-medium rounded-lg md:p-0 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:dark:bg-gray-900">
                                 {status === "loading" && <ImSpinner9 className="ease-in-out animate-spin" size={25} />}
                                 {
                                     session?.user ?
-                                        <div className='flex w-full items-center justify-center gap-2'>
-                                            <Image src={session?.user.image ?? `https://ui-avatars.com/api/?name=${session.user.name}&background=random&rounded=true&size=128&font-size=0.50`} alt="user" width={35} height={35} className="object-cover rounded-full hidden md:inline-block" />
-                                            <p className='border md:border-none p-2 md:p-0 border-slate-900 rounded-lg w-2/4 text-center'>{session.user.name}</p>
+                                        <div className='flex items-center justify-center w-full gap-2'>
+                                            <Image src={image && !image.includes("fbsbx") ? image : avatar} alt={`${session.user.name} pic`} width={35} height={35} className="hidden object-cover rounded-full md:inline-block" />
+                                            <p className='w-2/4 p-2 text-center border rounded-lg md:border-none md:p-0 border-slate-900'>{session.user.name}</p>
                                         </div>
                                         :
                                         <Link onClick={() => setOpen(false) } href="/signin" className={`${buttonVariants({ variant: "outline" })} w-full`}>Sign in</Link>
@@ -78,7 +80,7 @@ export default function NavMenu() {
                 </PopoverContent>
             </Popover>
             <NavigationMenu>
-                <NavigationMenuList className="gap-2 hidden md:flex items-center justify-center">
+                <NavigationMenuList className="items-center justify-center hidden gap-2 md:flex">
                     <NavigationMenuItem>
                         <Link href="/" legacyBehavior passHref>
                             <NavigationMenuLink className={navigationMenuTriggerStyle()}>Home</NavigationMenuLink>

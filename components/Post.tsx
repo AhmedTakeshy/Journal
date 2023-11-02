@@ -20,7 +20,8 @@ type Props = {
 export default async function Post({ authorName, authorImage, date, title, topic, content, id, authorId }: Props) {
     const session = await getServerSession();
     const avatar = `https://ui-avatars.com/api/?name=${session?.user?.name}&background=random&rounded=true&size=128&font-size=0.50`;
-
+    const image = session?.user?.image;
+    console.log(session)
     return (
         <>
             <div className="w-full max-w-screen-md p-4 mt-6 border dark:bg-slate-700 bg-slate-200 rounded-2xl">
@@ -33,7 +34,7 @@ export default async function Post({ authorName, authorImage, date, title, topic
                             <time className="text-xs text-gray-400">{formattedDate(date)}</time>
                         </div>
                     </Link>
-                    <OptionsButton authorId={authorId} id={id} />
+                    <OptionsButton authorId={authorId} id={id} /> 
                 </div>
                 <Link href={`/posts/${id}`} className="grid">
                     <h2 className="whitespace-pre-wrap mt-7">{title}</h2>
@@ -144,7 +145,7 @@ export default async function Post({ authorName, authorImage, date, title, topic
                     </div>
                 </div>  */}
                 <div className="flex items-center justify-between mt-4">
-                    <Image src={session?.user?.image || avatar} alt={`${session?.user?.name} user image`} width={40} height={40} className="object-cover w-10 h-10 bg-yellow-500 border rounded-full" />
+                    <Image src={image && !image.includes("fbsbx") ?image :avatar} alt={`${session?.user?.name} user image`} width={40} height={40} className="object-cover w-10 h-10 bg-yellow-500 border rounded-full" />
                     <div className="flex items-center justify-between w-11/12 px-4 overflow-hidden border bg-gray-50 h-11 rounded-2xl ">
                         <input type="text" className="w-full h-full outline-none bg-gray-50 " placeholder="Write your comment..." name="comment" />
                     </div>
