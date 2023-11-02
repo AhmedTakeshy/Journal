@@ -12,7 +12,6 @@ export async function GET() {
                 }
             }
         })
-        if(!posts) return Response.json({ message: "Posts are not found", status: 404 })
         revalidateTag("posts")
         return Response.json({ posts, postsAuthor })
     } catch (error) {
