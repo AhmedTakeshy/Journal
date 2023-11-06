@@ -22,11 +22,12 @@ import {
 
 import { SlOptions } from "react-icons/sl"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { useToast } from "./ui/use-toast"
 import { ImSpinner9 } from "react-icons/im"
+import {usePathname} from "next/navigation"
 
 type Props = {
     id: number;
@@ -34,14 +35,13 @@ type Props = {
 }
 
 export function OptionsButton({ id, authorId }: Props) {
-    const pathname = usePathname();
     const { data: session } = useSession();
     const [authorized, setAuthorized] = useState<boolean | null>(null);
     const [open, setOpen] = useState<boolean>(false);
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+    const [isSubmitting, setIsSubmitting] = useState<{ delete: boolean, hide: boolean }>({ delete: false, hide: false })
     const router = useRouter()
     const { toast } = useToast()
-
+    const pathname = usePathname()
 
     useEffect(() => {
         const authorizationHandler = async () => {
@@ -62,7 +62,7 @@ export function OptionsButton({ id, authorId }: Props) {
 
     const deletePost = async () => {
         if (!authorized) return;
-        setIsSubmitting(true)
+        setIsSubmitting(prev => ({ ...prev, delete: true }))
         const res = await fetch(`/api/post?id=${id}&email=${session?.user?.email}`, {
             method: "DELETE",
         })
@@ -70,11 +70,27 @@ export function OptionsButton({ id, authorId }: Props) {
         if (data.status === 200) {
             setOpen(false)
             toast({ title: "Deleted", description: "Your post has been deleted", duration: 3000 })
-            router.replace("/posts")
-            setIsSubmitting(false)
+            pathname.includes(`/posts/${id}`) ? router.replace("/") : router.refresh()
+            setIsSubmitting(prev => ({ ...prev, delete: false }))
         } else {
             toast({ title: "Oops!", description: "Something went wrong", duration: 3000, variant: "destructive" })
-            setIsSubmitting(false)
+            setIsSubmitting(prev => ({ ...prev, delete: false }))
+        }
+    }
+    const hidePost = async () => {
+        setIsSubmitting(prev => ({ ...prev, hide: true }))
+        const res = await fetch(`/api/post?id=${id}&email=${session?.user?.email}`, {
+            method: "PATCH",
+        })
+        const data = await res.json()        
+        if (data.status === 200) {
+            setOpen(false)
+            toast({ title: "Hide", description: "Your post has been hidden", duration: 3000 })
+            pathname.includes(`/posts/${id}`) ? router.replace("/")  : router.refresh()
+            setIsSubmitting(prev => ({ ...prev, hide: false }))
+        } else {
+            toast({ title: "Oops!", description: "Something went wrong", duration: 3000, variant: "destructive" })
+            setIsSubmitting(prev => ({ ...prev, hide: false }))
         }
     }
 
@@ -87,11 +103,12 @@ export function OptionsButton({ id, authorId }: Props) {
             </PopoverTrigger>
 
             <PopoverContent className="w-40">
-                <Link href={`/posts/${id}/hide`} >Hide</Link>
-                {authorized && (<div className="grid gap-1 mt-1 place-content-start">
-                    <Link href={`/posts/${id}/edit`}>Edit</Link>
+                <Button  disabled={isSubmitting.hide} variant="ghost" onClick={hidePost} >{isSubmitting.hide ? <ImSpinner9 className="ease-in-out animate-spin" size={25} /> : "Hide"}</Button>
+                {authorized && (
+                <div className="grid place-items-baseline">
+                        <Link className={`${buttonVariants({ variant: "ghost" })}`} href={`/posts/${id}/edit`}>Edit</Link>
                     <AlertDialog>
-                        <AlertDialogTrigger>Delete</AlertDialogTrigger>
+                            <AlertDialogTrigger className={`${buttonVariants({ variant: "ghost" })}`}>Delete</AlertDialogTrigger>
                         <AlertDialogContent>
                             <AlertDialogHeader>
                                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -102,11 +119,12 @@ export function OptionsButton({ id, authorId }: Props) {
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction disabled={isSubmitting} onClick={deletePost} className={buttonVariants({ variant: "destructive" })}>{isSubmitting ? <ImSpinner9 className="ease-in-out animate-spin" size={25} /> : "Continue"}</AlertDialogAction>
+                                <AlertDialogAction disabled={isSubmitting.delete} onClick={deletePost} className={buttonVariants({ variant: "destructive" })}>{isSubmitting.delete ? <ImSpinner9 className="ease-in-out animate-spin" size={25} /> : "Continue"}</AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                     </AlertDialog>
-                </div>)}
+                </div>
+                )}
             </PopoverContent>
         </Popover>
     )

@@ -11,24 +11,24 @@ export default function SignWithGithub() {
         <div className="hidden w-5/12 h-px dark:bg-gray-300 bg-slate-800 md:block"></div>
       </div>
       <Button onClick={() => signIn("github", {
-        callbackUrl: `/posts`
-      })} className="w-full text-black bg-slate-700 my-2">
+        callbackUrl: `/`
+      })} className="w-full my-2 text-black bg-slate-700">
         <Image className='mr-3' loading="lazy" height={24} width={24} src="https://authjs.dev/img/providers/github.svg" alt="Github logo" />
         <span>Sign in with GitHub</span>
       </Button>
 
       <div className="flex items-center justify-between gap-4">
-        <Button  onClick={() => signIn("facebook", {callbackUrl: `/posts`})} className="w-full text-black bg-white my-2">
+        <Button  onClick={() => signIn("facebook", {callbackUrl: `/`})} className="w-full my-2 text-black bg-white">
           <Image className='mr-3' loading="lazy" height={24} width={24} src="https://authjs.dev/img/providers/facebook.svg" alt="Github logo" />
           <span>Sign in with Facebook</span>
         </Button>
 
-        <Button  onClick={() => signIn("instagram", {callbackUrl: `/posts`})} className="w-full text-black bg-white my-2">
+        <Button  onClick={() => signIn("instagram", {callbackUrl: `/`})} className="w-full my-2 text-black bg-white">
           <Image className='mr-3' loading="lazy" height={24} width={24} src="https://authjs.dev/img/providers/instagram.svg" alt="Github logo" />
           <span>Sign in with Instagram</span>
         </Button>
       </div>
-        <Button  onClick={() => signIn("google", {callbackUrl: `/posts`})} className="w-full text-black bg-white my-2">
+        <Button  onClick={() => signIn("google", {callbackUrl: `/`})} className="w-full my-2 text-black bg-white">
         <Image className='mr-3' loading="lazy" height={24} width={24} src="https://authjs.dev/img/providers/google.svg" alt="Github logo" />
           <span>Sign in with Google</span>
         </Button>

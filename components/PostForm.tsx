@@ -57,10 +57,9 @@ export default function PostForm({ method, data }: Props) {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         setIsSubmitting(true)
         let url = `/api/post`
-        if(method === "PUT") url += `?id=${data?.id}`
+        if (method === "PUT") { url = `/api/post?id=${data?.id}`}        
         try {
-            const respond =
-                await fetch(url, {
+            const respond = await fetch(url, {
                     method,
                     body: JSON.stringify({
                         title: values.title,
@@ -74,17 +73,26 @@ export default function PostForm({ method, data }: Props) {
                     },
                 })
             const res = await respond.json()
-            if (res.status === 201 || res.status === 200) {
+            if (res.status === 201 ) {
                 toast({
                     title: "Success!",
-                    description: `Your post has been ${method === "POST" ? "published" : "updated"}.`,
+                    description: `Your post has been published.`,
                     duration: 3000,
                 })
-                form.reset()
                 setIsSubmitting(false)
                 setOpen(false)
-                router.push(`/posts/${method === "POST" ? "" : res.post.id}`)
+                form.reset()
                 router.refresh()
+            }
+            if (res.status === 200) {
+                toast({
+                    title: "Success!",
+                    description: `Your post has been updated.`,
+                    duration: 3000,
+                })
+                setIsSubmitting(false)
+                router.refresh()
+                router.replace(`/posts/${data?.id}`)
             }
         } catch (error) {
             toast({
