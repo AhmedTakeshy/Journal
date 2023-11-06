@@ -19,8 +19,13 @@ export async function GET(req: NextRequest) {
                 email: email!
             },
         })
+        const posts = await prisma.post.findMany({
+            where: {
+                authorId: user?.id!
+            },
+        })
         if (!user) return Response.json({ message: "User not found", status: 404 })
-        return Response.json(user)
+        return Response.json({posts,user})
     } catch (error) {
         return Response.json({ message: "Something went wrong!", status: 500 })
     }
