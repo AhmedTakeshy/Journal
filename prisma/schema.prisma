@@ -34,11 +34,12 @@ model Image {
 model User {
   id            Int       @id @default(autoincrement())
   name          String?   @unique
-  email         String?    @unique
+  email         String?   @unique
   password      String?
   image         String?
   emailVerified DateTime?
-  posts         Post[]
+  posts         Post[] 
+  hiddenPosts   Int[]     @default([])      
   active        Boolean?  @default(true)
   role          Role?     @default(USER)
   createdAt     DateTime  @default(now())
