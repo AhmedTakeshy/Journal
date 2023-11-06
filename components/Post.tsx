@@ -3,6 +3,8 @@ import { formattedDate } from "@/lib/helpers"
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { OptionsButton } from "./OptionsButton";
+import { BsSendFill } from "react-icons/bs";
+import CommentForm from "./CommentForm";
 
 type Props = {
     id: number;
@@ -145,9 +147,7 @@ export default async function Post({ authorName, authorImage, date, title, topic
                 </div>  */}
                 <div className="flex items-center justify-between mt-4">
                     <Image src={image && !image.includes("fbsbx") ?image :avatar} alt={`${session?.user?.name} user image`} width={40} height={40} className="object-cover w-10 h-10 bg-yellow-500 border rounded-full" />
-                    <div className="flex items-center justify-between w-11/12 px-4 overflow-hidden border bg-gray-50 h-11 rounded-2xl ">
-                        <input type="text" className="w-full h-full outline-none bg-gray-50 " placeholder="Write your comment..." name="comment" />
-                    </div>
+                        <CommentForm />
                 </div>
             </div>
         </>

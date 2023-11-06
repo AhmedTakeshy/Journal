@@ -17,8 +17,20 @@ model Post {
   images    Image[]
   topic     String
   published Boolean  @default(false)
+  comments  Comment[]
   authorId  Int
   author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -39,7 +51,8 @@ model User {
   image         String?
   emailVerified DateTime?
   posts         Post[] 
-  hiddenPosts   Int[]     @default([])      
+  hiddenPosts   Int[]     @default([])
+  comments      Comment[]   
   active        Boolean?  @default(true)
   role          Role?     @default(USER)
   createdAt     DateTime  @default(now())
