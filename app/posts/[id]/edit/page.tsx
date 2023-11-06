@@ -13,7 +13,7 @@ const getPost = async (id: number) => {
 }
 
 export default async function page({ params: { id } }: Props) {
-    const post = await getPost(id);
+    const {post} = await getPost(id);
 
 
     return (

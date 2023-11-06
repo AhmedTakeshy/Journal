@@ -3,7 +3,7 @@ import PostForm from '@/components/PostForm';
 import { getServerSession } from 'next-auth';
 
 
-export const getPostsUser = async (email: string) => {
+const getPostsUser = async (email: string) => {
   const postsAndUser = await fetch(`${process.env.BASE_URL}/api/users?email=${email}`, { next: { tags: ["userPosts"] } });
   const { posts, user } = await postsAndUser.json();
   return { posts, user };
