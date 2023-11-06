@@ -3,15 +3,15 @@ import { getServerSession } from 'next-auth';
 import Post from "@/components/Post";
 import PostForm from "@/components/PostForm";
 
-const getPostsAndAuthors = async () => {
-  const res = await fetch(`${process.env.BASE_URL}/api/posts`, { next: { tags: ["posts"] } })
+const getPostsAndAuthors = async (email:string) => {
+  const res = await fetch(`${process.env.BASE_URL}/api/posts?email=${email}`, { next: { tags: ["posts"] } })
   const data = await res.json()
   return data
 }
 
 export default async function Home() {
   const session = await getServerSession()
-  const postsAndAuthors = await getPostsAndAuthors();
+  const postsAndAuthors = await getPostsAndAuthors(session?.user?.email as string);
   return (
     session?.user
       ?
@@ -33,7 +33,7 @@ export default async function Home() {
                 content={post.content}
                 topic={post.topic} />
             )
-          }).reverse()
+          })
           :null}
         </div>
       )
