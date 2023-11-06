@@ -53,7 +53,7 @@ export function SignInForm() {
         setIsSubmitting(true)
         const signInData = await signIn("credentials", {
             redirect: false,
-            email: values.email,
+            email: values.email.toLowerCase(),
             password: values.password,
         })
         if (signInData?.status === 200) {

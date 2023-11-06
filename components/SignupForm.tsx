@@ -74,7 +74,7 @@ export function SignUpForm() {
             },
             body: JSON.stringify({
                 username: values.username,
-                email: values.email,
+                email: values.email.toLowerCase(),
                 password: values.password,
             })
         })
@@ -96,6 +96,7 @@ export function SignUpForm() {
                 duration: 3000,
                 variant: "destructive"
             })
+            setIsSubmitting(false)
         }
     }
 
