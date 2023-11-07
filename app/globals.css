@@ -65,7 +65,31 @@
     --ring: 212.7 26.8% 83.9%;
   }
 }
- 
+.placeholder:empty:not(:focus)::before {
+ content:attr(data-text);
+ color: gainsboro;
+}
+
+.none::-webkit-scrollbar {
+  display: none;
+}
+textarea.none::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+textarea.none::-webkit-scrollbar-track {
+  display: none;
+}
+
+textarea.none::-webkit-scrollbar-track-piece {
+  display: none;
+}
+textarea.none::-webkit-scrollbar-button{
+  display: none;
+}
+
+
+
 @layer base {
   * {
     @apply border-border;
