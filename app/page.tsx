@@ -12,6 +12,7 @@ const getPostsAndAuthors = async (email:string) => {
 export default async function Home() {
   const session = await getServerSession()
   const postsAndAuthors = await getPostsAndAuthors(session?.user?.email as string);
+
   return (
     session?.user
       ?
@@ -36,9 +37,7 @@ export default async function Home() {
           })
           :null}
         </div>
-      )
-      :
-      (
+      ) : (
         <div className="relative flex flex-col items-center justify-center mt-24 h-[70vh]">
           <div className="mx-auto rounded-full dark:bg-cyan-700 blur-[90px] absolute  w-80 h-80 z-[-1] animate-pulse" >
           </div>

@@ -58,7 +58,7 @@ export function OptionsButton({ id, authorId }: Props) {
             return
         }
         authorizationHandler()
-    }, [id, session?.user?.email])
+    }, [authorId, session?.user])
 
     const deletePost = async () => {
         if (!authorized) return;

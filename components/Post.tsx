@@ -147,7 +147,7 @@ export default async function Post({ authorName, authorImage, date, title, topic
                 </div>  */}
                 <div className="flex items-center justify-between mt-4">
                     <Image src={image && !image.includes("fbsbx") ?image :avatar} alt={`${session?.user?.name} user image`} width={40} height={40} className="object-cover w-10 h-10 bg-yellow-500 border rounded-full" />
-                        <CommentForm />
+                    <CommentForm />
                 </div>
             </div>
         </>

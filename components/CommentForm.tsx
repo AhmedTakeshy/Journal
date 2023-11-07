@@ -2,7 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form'
+import { Form, FormControl, FormField, FormItem, FormMessage } from './ui/form'
 import { Textarea } from './ui/textarea'
 import { BsSendFill } from 'react-icons/bs'
 import { Button } from './ui/button'
@@ -31,7 +31,7 @@ export default function CommentForm() {
                         <FormItem className='flex justify-between items-center w-full h-full'>
                             <FormControl>
                                 <Textarea itemType="string" spellCheck={true} className="text-black w-full min-h-fit h-full border-none ring-0 shadow-none outline-none bg-gray-50 focus-within:outline-none focus:outline-none focus-visible:outline-none" placeholder="Write your comment..." {...field}/>
-                                // try to remove the ring or outline around the textarea element
+                                {/* // try to remove the ring or outline around the textarea element */}
                             </FormControl>
                             <FormMessage />
                         </FormItem>
