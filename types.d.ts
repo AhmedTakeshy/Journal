@@ -13,3 +13,11 @@ type Author = {
     email: string;
     image: string;
 }
+
+type PostComment = {
+    id: number;
+    postId: number;
+    content: string;
+    authorId: number;
+    createdAt: string;
+}
