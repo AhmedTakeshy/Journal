@@ -6,6 +6,7 @@ import { getServerSession } from 'next-auth';
 const getPostsUser = async (email: string) => {
   const postsAndUser = await fetch(`${process.env.BASE_URL}/api/users?email=${email}`, { next: { tags: ["userPosts"] } });
   const { posts, user } = await postsAndUser.json();
+  console.log("🚀 ~ file: page.tsx:9 ~ getPostsUser ~ { posts, user }:", { posts, user })
   return { posts, user };
 }
 
@@ -16,7 +17,7 @@ export default async function page() {
   return (
     <div className='grid grid-cols-1 m-4 place-items-center w-[40rem]'>
       <PostForm method='POST' />
-      {posts.map((post: Post) => {
+      {!!posts && posts.map((post: Post) => {
         return (
           <Post
             key={post.id}
@@ -29,7 +30,7 @@ export default async function page() {
             content={post.content}
             topic={post.topic} />
         )
-      }).reverse()
+      })
       }
     </div>
   )

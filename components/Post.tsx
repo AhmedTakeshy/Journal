@@ -56,11 +56,11 @@ export default async function Post({ authorName, authorImage, date, title, topic
                 <div className="flex items-center justify-around h-10 my-4 border-y">
                     <div className="flex items-center gap-3 transition-colors hover:cursor-pointer group">
                         <FaRegCommentDots className="h-8 duration-500 w-7 group-hover:text-slate-500 dark:text-white text-slate-800" />
-                        <span className="text-sm duration-300 group-hover:text-slate-500 dark:text-white text-slate-800">10 Comments</span>
+                        <span className="text-sm duration-300 group-hover:text-slate-500 dark:text-white text-slate-800">{comments?.length} Comments</span>
                     </div>
                     <div className="flex items-center gap-3 transition-colors hover:cursor-pointer group">
                         <AiOutlineHeart className="h-8 duration-500 w-7 group-hover:text-slate-500 dark:text-white text-slate-800" />
-                        <span className="text-sm duration-300 group-hover:text-slate-500 dark:text-white text-slate-800">5 Likes</span>
+                        <span className="text-sm duration-300 group-hover:text-slate-500 dark:text-white text-slate-800">{comments?.length} Likes</span>
                     </div>
                     <div className="flex items-center gap-3 transition-colors hover:cursor-pointer group">
                         <PiShareFatLight className="h-8 duration-500 w-7 group-hover:text-slate-500 dark:text-white text-slate-800" />
