@@ -33,7 +33,7 @@ export default async function Post({ authorName, authorImage, date, title, topic
     return (
         <>
             <div className="w-full max-w-screen-md p-4 mt-6 border dark:bg-slate-700 bg-slate-200 rounded-2xl">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-1">
                     <Link href={`/posts/${id}`} className="gap-3.5	flex items-center ">
                         <Image src={authorImage ?? avatar}
                             alt={`${authorName} image`} width={40} height={40} className="object-cover w-10 h-10 bg-yellow-500 rounded-full" />
@@ -56,19 +56,19 @@ export default async function Post({ authorName, authorImage, date, title, topic
                 <div className="flex items-center justify-around h-10 my-4 border-y">
                     <div className="flex items-center gap-3 transition-colors hover:cursor-pointer group">
                         <FaRegCommentDots className="h-8 duration-500 w-7 group-hover:text-slate-500 dark:text-white text-slate-800" />
-                        <span className="text-sm duration-300 group-hover:text-slate-500 dark:text-white text-slate-800">{comments?.length} Comments</span>
+                        <p className="text-sm duration-300 group-hover:text-slate-500 dark:text-white text-slate-800">{comments?.length} <span className="hidden sm:inline-block">Comments</span></p>
                     </div>
                     <div className="flex items-center gap-3 transition-colors hover:cursor-pointer group">
                         <AiOutlineHeart className="h-8 duration-500 w-7 group-hover:text-slate-500 dark:text-white text-slate-800" />
-                        <span className="text-sm duration-300 group-hover:text-slate-500 dark:text-white text-slate-800">{comments?.length} Likes</span>
+                        <p className="text-sm duration-300 group-hover:text-slate-500 dark:text-white text-slate-800">{comments?.length} <span className="hidden sm:inline-block">Likes</span></p>
                     </div>
                     <div className="flex items-center gap-3 transition-colors hover:cursor-pointer group">
                         <PiShareFatLight className="h-8 duration-500 w-7 group-hover:text-slate-500 dark:text-white text-slate-800" />
-                        <span className="text-sm duration-300 group-hover:text-slate-500 dark:text-white text-slate-800">Share</span>
+                        <p className="text-sm duration-300 group-hover:text-slate-500 dark:text-white text-slate-800"><span className="hidden sm:inline-block">Share</span></p>
                     </div>
                     <div className="flex items-center gap-3 transition-colors hover:cursor-pointer group">
                         <CiBookmark className="h-8 duration-500 w-7 group-hover:text-slate-500 dark:text-white text-slate-800" />
-                        <span className="text-sm duration-300 group-hover:text-slate-500 dark:text-white text-slate-800">Saved</span>
+                        <p className="text-sm duration-300 group-hover:text-slate-500 dark:text-white text-slate-800"><span className="hidden sm:inline-block">Saved</span></p>
                     </div>
                 </div> 
                 <div className="flex items-start justify-between mt-4">

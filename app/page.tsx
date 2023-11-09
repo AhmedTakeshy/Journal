@@ -38,7 +38,7 @@ export default async function Home() {
           :null}
         </div>
       ) : (
-        <div className="relative flex flex-col items-center justify-center mt-24 h-[70vh]">
+        <div className="relative flex flex-col items-center justify-center mt-24 h-[70vh] m-4">
           <div className="mx-auto rounded-full dark:bg-cyan-700 blur-[90px] absolute  w-80 h-80 z-[-1] animate-pulse" >
           </div>
           <h1 className="mb-4 text-3xl font-bold">Try it now for free.</h1>
