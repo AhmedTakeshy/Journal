@@ -13,12 +13,10 @@ const getPost = async (id: number) => {
 }
 
 const getComments = async (id: number) => {
-  const res = await fetch(`${process.env.BASE_URL}/api/post/comment?id=${id}`, {next: {revalidate:0} });
+  const res = await fetch(`${process.env.BASE_URL}/api/post/comment?id=${id}`, {next: {tags: ["comments"]} });
   const data = await res.json();
   return data;
 }
-
-// export const revalidate = 30;
 
 export default async function page({ params: { id } }: Props) {
   const {post,user} = await getPost(id);  
