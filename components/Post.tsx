@@ -30,6 +30,7 @@ export default async function Post({ authorName, authorImage, date, title, topic
     const session = await getServerSession();
     const avatar = `https://ui-avatars.com/api/?name=${session?.user?.name}&background=random&rounded=true&size=128&font-size=0.50`;
     const image = session?.user?.image;
+    
     return (
         <>
             <div className="w-full max-w-screen-md p-4 mt-6 border dark:bg-slate-700 bg-slate-200 rounded-2xl">

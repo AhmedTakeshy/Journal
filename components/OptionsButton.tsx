@@ -44,10 +44,10 @@ export function OptionsButton({ id, authorId }: Props) {
     const pathname = usePathname()
 
     useEffect(() => {
-        const authorizationHandler = async () => {
+        const authorizationHandler = async () => {                     
             if (session?.user) {
                 const res = await fetch(`/api/user?email=${session?.user?.email}`)
-                const user = await res.json()
+                const {user} = await res.json()
                 if (authorId === user?.id) {
                     setAuthorized(true)
                 }
@@ -79,7 +79,7 @@ export function OptionsButton({ id, authorId }: Props) {
     }
     const hidePost = async () => {
         setIsSubmitting(prev => ({ ...prev, hide: true }))
-        const res = await fetch(`/api/post?id=${id}&email=${session?.user?.email}`, {
+        const res = await fetch(`${process.env.BASE_URL}/api/post?id=${id}&email=${session?.user?.email}`, {
             method: "PATCH",
         })
         const data = await res.json()        
