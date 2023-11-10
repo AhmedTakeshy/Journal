@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma"
 import { hash } from "bcrypt";
 import * as z from "zod";
 import { NextRequest } from "next/server";
+import { revalidateTag } from "next/cache";
 
 
 const userSchema = z.object({
@@ -18,12 +19,22 @@ export async function GET(req: NextRequest) {
             where: {
                 email: email!
             },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                image: true,
+            }
         })
         const posts = await prisma.post.findMany({
             where: {
                 authorId: user?.id!
             },
+            orderBy: {
+                createdAt: "desc"
+            },
         })
+        revalidateTag("userPosts")
         return Response.json({posts,user})
     } catch (error) {
         return Response.json({ message: "Something went wrong!", status: 500 })
