@@ -72,7 +72,6 @@ export async function DELETE(req: NextRequest) {
                 hiddenPosts: true
             }
         });
-        console.log("🚀 ~ file: route.ts:75 ~ DELETE ~ user:", user)
         const post = await prisma.post.findUnique({
             where: {
                 id: +postId!
@@ -148,7 +147,6 @@ export async function PATCH(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     const id = searchParams.get('id');
     const email = searchParams.get('email');
-    console.log({id, email})
     try {
         const user = await prisma.user.findUnique({
             where: {
@@ -189,7 +187,6 @@ export async function PATCH(req: NextRequest) {
         return Response.json({ message: "Post has been hidden successfully.", status: 200 });
     }
     catch (error) {
-        console.log("🚀 ~ file: route.ts:165 ~ PATCH ~ error:", error) 
         return Response.json({ message: "Something went wrong", status: 500 });
     }
 }
