@@ -14,7 +14,7 @@ export default async function Profile() {
     const image = session?.user?.image;
     const {posts, user} = await getUser(session?.user?.email!);
     return (
-        <div >
+        <div className='w-full'>
             <section className="relative block h-[31rem]">
                 <div className="absolute inset-0 w-full h-full bg-center bg-cover rounded-lg" style={{
             backgroundImage: 'url("https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80")'}}>
@@ -30,7 +30,7 @@ export default async function Profile() {
                 <div className="container px-4 mx-auto">
                     <div className="relative flex flex-col w-full min-w-0 mb-6 -mt-64 break-words bg-white rounded-lg shadow-xl dark:bg-slate-700">
                         <div className="px-6">
-                            <div className="flex flex-wrap justify-center">
+                            <div className="flex flex-wrap justify-between">
                                 <div className="flex justify-center w-full px-4 lg:w-3/12 lg:order-2">
                                     <Image width={150} height={150} src={image && !image.includes("fbsbx") ? image : avatar} alt={`${session?.user?.name} pic`} className="relative left-0 object-contain w-32 h-32 max-w-xs border-none rounded-full shadow-xl bottom-16 "/>
                                 </div>
