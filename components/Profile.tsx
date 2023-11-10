@@ -32,7 +32,7 @@ export default async function Profile() {
                         <div className="px-6">
                             <div className="flex flex-wrap justify-center">
                                 <div className="flex justify-center w-full px-4 lg:w-3/12 lg:order-2">
-                                    <Image width={150} height={150} src={image && !image.includes("fbsbx") ? image : avatar} alt={`${session?.user?.name} pic`} className="relative left-0 object-contain w-32 h-32 max-w-xs border-none rounded-full shadow-xl bottom-16 lg:left-20"/>
+                                    <Image width={150} height={150} src={image && !image.includes("fbsbx") ? image : avatar} alt={`${session?.user?.name} pic`} className="relative left-0 object-contain w-32 h-32 max-w-xs border-none rounded-full shadow-xl bottom-16 "/>
                                 </div>
                                 {/* <div className="w-full px-4 lg:w-4/12 lg:order-3 lg:text-right lg:self-center">
                                     <div className="px-3 py-6 mt-32 sm:mt-0">
